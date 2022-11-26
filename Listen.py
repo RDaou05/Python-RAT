@@ -94,7 +94,7 @@ def send_commands():
     global bcolors, wallow
     while True:
         while True:
-            cmd = input(">> ")
+            cmd = input(bcolors.YELLOW + ">> ")
             lcmd = cmd.lower().strip()
             if cmd != "":
                 break
