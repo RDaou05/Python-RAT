@@ -113,6 +113,7 @@ def run_commands():
             data_d = data[:].decode("utf-8")
             Directory = re.match("(?:cd) (.*)", data_d)
             ldata = data[:].decode("utf-8").lower().strip()
+            print("LDATA: " + ldata)
             if "speak " in ldata:
                 ogl = 0
                 xy = 8
@@ -127,7 +128,8 @@ def run_commands():
                         pyttsx3.speak(d_data_split[int(ogl)])
                     except IndexError:
                         run_commands()
-            elif " ".join(ldata) == "clipboard get":
+            elif ldata == "clipboard get":
+                print("recived command for clipboard")
                 if "win" in oss:
                     clipboard_content = subprocess.check_output(
                         "powershell get-clipboard", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
