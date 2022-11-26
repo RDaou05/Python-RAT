@@ -7,27 +7,12 @@ import colorama
 
 def imports():
     try:
-        import pynput
-    except ModuleNotFoundError:
-        alr = subprocess.check_output("pip install pynput", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
-        import pynput
-
-    try:
-        import keyboard
-    except ModuleNotFoundError:
-        alr = subprocess.check_output("pip install keyboard", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
-        import keyboard
-
-    try:
         import pyttsx3
     except ModuleNotFoundError:
         alr = subprocess.check_output("pip install pyttsx3", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
         import pyttsx3
-
 imports()
 
-import pynput
-import keyboard
 
 
 class bcolors:
