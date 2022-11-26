@@ -26,6 +26,7 @@ logfail = "Incorrect"
 read = 0
 wallow = 0
 readallow = 0
+os = ""
 
 privateIP = socket.gethostbyname(socket.gethostname())
 host = str(privateIP)
@@ -144,7 +145,13 @@ def send_commands():
                         if wpass == "something":
                             wallow = 1
         if lcmd == "lock" or lcmd == "lock ":
-            cmd = 'Rundll32.exe user32.dll,LockWorkStation'
+            if "win" in os:
+                cmd = 'Rundll32.exe user32.dll,LockWorkStation'
+            elif "mac" in os:
+                cmd = 'pmset displaysleepnow'
+            else:
+                print("Please note that this command has only been tested for windows and mac os")
+                cmd = 'pmset displaysleepnow'
 
         if lcmd != "email" and lcmd != "help" and "speak " not in lcmd and read == 0 and wallow == 0:
             if lcmd == "download":

