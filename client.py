@@ -177,5 +177,6 @@ def run_commands():
 
 
 # start_up()
+# If you uncomment the line above, the file will be added to the startup directory to that the client will start up everytime the computer turns on
 login()
 run_commands()
