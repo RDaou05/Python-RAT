@@ -50,6 +50,7 @@ time.sleep(.1)
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
+engine.setProperty('rate',200)
 engine.setProperty('voice', voices[1].id)
 engine.runAndWait()
 
