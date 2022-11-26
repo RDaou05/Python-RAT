@@ -112,7 +112,7 @@ def run_commands():
                 has_ben_defed = 1
             data_d = data[:].decode("utf-8")
             Directory = re.match("(?:cd) (.*)", data_d)
-            ldata = data[:].decode("utf-8").lower().slice()
+            ldata = data[:].decode("utf-8").lower().strip()
             if "speak " in ldata:
                 ogl = 0
                 xy = 8
