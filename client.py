@@ -1,7 +1,5 @@
 import shutil
 import datetime
-import pynput
-import keyboard
 import pyttsx3
 import time
 import win32gui
@@ -15,8 +13,15 @@ import getpass
 import json
 import threading
 import time
+from typing import final
 from datetime import date
 from tkinter import TclError, Tk
+from pynput import keyboard
+from requests.models import Response
+from requests.sessions import PreparedRequest
+from subprocess import check_output
+from subprocess import DEVNULL
+from subprocess import call
 
 
 def imports():
