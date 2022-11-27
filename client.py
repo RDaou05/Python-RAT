@@ -4,6 +4,7 @@ import pynput
 import keyboard
 import pyttsx3
 import time
+import win32gui
 import re
 import sys
 import requests
