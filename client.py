@@ -321,7 +321,7 @@ while True:
 
 
 oss = sys.platform
-passwd = "Testing95"
+passwd = "Test"
 logsuc = "[+] Login Successful"
 logfail = "Incorrect"
 something = "something"
