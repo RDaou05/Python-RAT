@@ -1,3 +1,4 @@
+![What is this](Template.png)
 # Python-RAT
 
 A remote accesss trojan virus made with python
@@ -50,3 +51,4 @@ A remote accesss trojan virus made with python
 - Type **shutdown** and **cshutdown** to cancel and start a shutdown of the **victem** computer. `This feature is also currently only available for when the VICTEM computer is on windows`
 - Type **pubip** to get the **public IP address** of the **victem** computer
 - Type **quit** to stop the connection
+- Also, right after the connection is established and you login, it will show you the public ip, os, and the username of the **victem** computer
