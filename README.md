@@ -33,7 +33,7 @@ A remote accesss trojan virus made with python
 # Additional features included
  - This includes a built in keylogger with custom commands
  
- - `(PLEASE NOTE THAT THE KEYLOGGER WILL ONLY WORKs WHEN THE VICTEM IS ON WINDOWS)`
+ - `(PLEASE NOTE THAT THE KEYLOGGER WILL ONLY WORK WHEN THE VICTEM IS ON WINDOWS)`
 
    - To inject the keylogger onto the **victem** computer, just type **keylogger start**. Now the keylogger will run on the **victem** computer as long as the `client.py` file is running (even if you are not connected to their computer)
     &nbsp;
